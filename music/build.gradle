@@ -37,4 +37,5 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor rootProject.depsLibs.butterknifeCompiler
     implementation project(path: ':lib_common_ui')
+    implementation project(':lib_network')
 }
