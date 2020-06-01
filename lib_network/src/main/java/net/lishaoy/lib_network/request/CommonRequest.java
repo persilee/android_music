@@ -50,7 +50,7 @@ public class CommonRequest {
             }
         }
         Headers.Builder headerBuilder = new Headers.Builder();
-        if (params != null) {
+        if (headers != null) {
             for (Map.Entry<String, String> entry : headers.urlParams.entrySet()) {
                 headerBuilder.add(entry.getKey(), entry.getValue());
             }

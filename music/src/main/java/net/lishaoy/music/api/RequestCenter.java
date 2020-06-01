@@ -5,6 +5,7 @@ import net.lishaoy.lib_network.listener.DisposeDataHandle;
 import net.lishaoy.lib_network.listener.DisposeDataListener;
 import net.lishaoy.lib_network.request.CommonRequest;
 import net.lishaoy.lib_network.request.RequestParams;
+import net.lishaoy.music.model.user.User;
 
 /**
  * 请求中心
@@ -12,8 +13,8 @@ import net.lishaoy.lib_network.request.RequestParams;
 public class RequestCenter {
 
     static class HttpConstants {
-        private static final String ROOT_URL = "http://imooc.com/api";
-        //private static final String ROOT_URL = "http://39.97.122.129";
+//        private static final String ROOT_URL = "http://imooc.com/api";
+        private static final String ROOT_URL = "http://39.97.122.129";
 
         /**
          * 首页请求接口
@@ -36,4 +37,14 @@ public class RequestCenter {
         CommonOkHttpClient.get(CommonRequest.
                 createGetRequest(url, params), new DisposeDataHandle(listener, clazz));
     }
+
+    public static void login(DisposeDataListener listener) {
+
+        RequestParams params = new RequestParams();
+        params.put("mb", "18734924592");
+        params.put("pwd", "999999q");
+        RequestCenter.getRequest(HttpConstants.LOGIN, params, listener, User.class);
+    }
+
+
 }

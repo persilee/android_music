@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.alibaba.arouter'
 apply plugin: 'maven'
 
 def pomName = this.getName()
@@ -14,6 +16,12 @@ android {
         targetSdkVersion rootProject.android.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        //ARouter配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName(), AROUTER_GENERATE_DOC: "enable"]
+            }
+        }
     }
 
     buildTypes {
@@ -29,6 +37,32 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     compileOnly rootProject.depsLibs.appcompact
+    compileOnly rootProject.depsLibs.design
+    compileOnly rootProject.depsLibs.recyclerview
+    compileOnly rootProject.depsLibs.eventbus
+    compileOnly rootProject.depsLibs.rxjava
+    compileOnly rootProject.depsLibs.greendao
+    compileOnly(rootProject.depsLibs.arouterapi) {
+        exclude group: 'com.android.support'
+    }
+    annotationProcessor rootProject.depsLibs.aroutercompiler
+
+    compileOnly project(':lib_image_loader')
+    compileOnly project(':lib_common_ui')
+    compileOnly project(':lib_share')
+    compileOnly project(':lib_base')
+
+}
+
+greendao {
+    //指定数据库schema版本号，迁移等操作会用到
+    schemaVersion 1
+    //DaoSession、DaoMaster以及所有实体类的dao生成的目录,默认为你的entity所在的包名
+    //daoPackage 包名
+    daoPackage 'com.example.tianmei.myapplication.greendao.gen'
+    //这就是我们上面说到的自定义生成数据库文件的目录了，可以将生成的文件放到我们的java目录中，而不是build中，这样就不用额外的设置资源目录了
+    //工程路径
+    //targetGenDir 'src/main/java/net/lishaoy/lib_audio/mediaplayer/db'
 }
 
 uploadArchives {

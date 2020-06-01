@@ -2,6 +2,7 @@ package net.lishaoy.lib_network.response;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -19,7 +20,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class CommonJsonCallback implements Callback {
-
     protected final String RESULT_CODE = "ecode";
     protected final int RESULT_CODE_VALUE = 0;
     protected final String ERROR_MSG = "emsg";

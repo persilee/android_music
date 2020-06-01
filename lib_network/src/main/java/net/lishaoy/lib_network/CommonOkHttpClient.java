@@ -1,5 +1,7 @@
 package net.lishaoy.lib_network;
 
+import android.util.Log;
+
 import net.lishaoy.lib_network.listener.DisposeDataHandle;
 import net.lishaoy.lib_network.request.CommonRequest;
 import net.lishaoy.lib_network.response.CommonFileCallback;
@@ -18,12 +20,21 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 public class CommonOkHttpClient {
+    private static final String TAG = "CommonOkHttpClient";
     private static final int TIME_OUT = 30;
     private static OkHttpClient mOkHttpClient;
 
     static {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Log.d(TAG, message);
+            }
+        });
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.hostnameVerifier(new HostnameVerifier() {
             @Override
@@ -46,6 +57,7 @@ public class CommonOkHttpClient {
         builder.readTimeout(TIME_OUT, TimeUnit.SECONDS);
         builder.writeTimeout(TIME_OUT, TimeUnit.SECONDS);
         builder.followRedirects(true);
+        builder.addInterceptor(logging);
         mOkHttpClient = builder.build();
     }
 
